@@ -9,11 +9,11 @@ type Props = {
   addMovie: (movie: Movie) => void;
 };
 
-const DEAFULT_POSTER =
+const DEFAULT_POSTER =
   'https://via.placeholder.com/360x270.png?text=no%20preview';
 
 const normalizeMovie = (data: MovieData): Movie => ({
-  imgUrl: data.Poster === 'N/A' ? DEAFULT_POSTER : data.Poster,
+  imgUrl: data.Poster === 'N/A' ? DEFAULT_POSTER : data.Poster,
   title: data.Title,
   description: data.Plot,
   imdbId: data.imdbID,
@@ -58,6 +58,7 @@ export const FindMovie: React.FC<Props> = ({ addMovie }) => {
         }
 
         setMovie(normalizeMovie(data));
+        setError(null);
       })
       .catch(() => {
         setError('Unexpected error');
@@ -88,7 +89,7 @@ export const FindMovie: React.FC<Props> = ({ addMovie }) => {
           </div>
           {error && (
             <p className="help is-danger" data-cy="errorMessage">
-              Can&apos;t find a movie with such a title
+              {error}
             </p>
           )}
         </div>
